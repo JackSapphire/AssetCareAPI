@@ -2,22 +2,20 @@
 
 namespace AssetCare_API.DTOs;
 
-public class CadastrarTecnicoDto
+public class UpdateTecnicoDto
 {
     [Required]
-    public string Username { get; set; }
+    public int Id { get; set; }
 
     [Required]
-    [DataType(DataType.Password)]
-    public string Password { get; set; }
+    public string Username { get; set; } = string.Empty;
 
-    [Required]
-    [Compare("Password")]
-    public string RePassword { get; set; }
+    public string Nome { get; set; } = string.Empty;
 
     public int RegistroProfissional { get; set; }
 
     public string Area { get; set; } = string.Empty;
 
     public string Formacao { get; set; } = string.Empty;
+
 }

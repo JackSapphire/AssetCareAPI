@@ -1,4 +1,5 @@
 ﻿using AssetCare_API.DTOs;
+using AssetCare_API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssetCare_API.Controllers;
@@ -6,8 +7,9 @@ namespace AssetCare_API.Controllers;
 [Route("[Controller]")]
 [ApiController]
 
-public class TecnicoController : ControllerBase
+public class TecnicoController(ITecnicoServices _tecnicoServices) : ControllerBase
 {
+
     [HttpGet("ListarTecnicos")]
     public IActionResult ListarTecnicos()
     {
@@ -23,10 +25,9 @@ public class TecnicoController : ControllerBase
     }
 
     [HttpPost("CadastrarTecnico")]
-    public IActionResult CadastrarTecnico(CadastrarTecnicoDto dto)
+    public async Task<IActionResult> CadastrarTecnico(AddTecnicoDto dto)
     {
-        // Lógica para cadastrar um novo técnico
-        throw new NotImplementedException();
+        return Ok(await _tecnicoServices.Cadastrar(dto));
     }
 
     [HttpPut("AlterarTecnico/{id}")]
