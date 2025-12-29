@@ -5,9 +5,8 @@ namespace AssetCare_API.DTOs;
 public class UpdateTecnicoDto
 {
     [Required]
-    public int Id { get; set; }
+    public string Id { get; set; }
 
-    [Required]
     public string Username { get; set; } = string.Empty;
 
     public string Nome { get; set; } = string.Empty;
