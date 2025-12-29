@@ -1,6 +1,8 @@
 ﻿using AssetCare_API.DTOs;
+using AssetCare_API.Models;
 using AssetCare_API.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace AssetCare_API.Controllers;
 
@@ -11,17 +13,16 @@ public class TecnicoController(ITecnicoServices _tecnicoServices) : ControllerBa
 {
 
     [HttpGet("ListarTecnicos")]
-    public IActionResult ListarTecnicos()
-    {
-        // Lógica para listar técnicos
-        throw new NotImplementedException();
-    }
+    public async Task<IActionResult> ListarTecnicosAsync()
+        => Ok(await _tecnicoServices.Listar());
 
-    [HttpGet("BuscarTecnico/{id}")]
-    public IActionResult BuscarTecnico(int id)
+    [HttpGet("BuscarTecnico/{Nome}")]
+    public async Task<IActionResult> BuscarTecnico(string Nome)
     {
-        // Lógica para buscar um técnico por ID
-        throw new NotImplementedException();
+        var Tecnico = await _tecnicoServices.Buscar(Nome);
+        if(Tecnico == null || !Tecnico.Any())
+            return NotFound("Técnico não encontrado.");
+        return Ok(Tecnico);
     }
 
     [HttpPost("CadastrarTecnico")]
@@ -31,16 +32,21 @@ public class TecnicoController(ITecnicoServices _tecnicoServices) : ControllerBa
     }
 
     [HttpPut("AlterarTecnico/{id}")]
-    public IActionResult AlterarTecnico(int id)
+    public async Task<IActionResult> AlterarTecnicoAsync(string id, UpdateTecnicoDto character)
     {
-        // Lógica para alterar um técnico existente
-        throw new NotImplementedException();
+        var result = await _tecnicoServices.Alterar(id, character);
+        if(result is null)
+            return NotFound("Técnico não encontrado.");
+        return Ok(result);
     }
 
     [HttpDelete("DeletarTecnico/{id}")]
-    public IActionResult DeletarTecnico(int id)
+    public async Task<IActionResult> DeletarTecnicoAsync(string id)
     {
-        // Lógica para deletar um técnico
-        throw new NotImplementedException();
+        var result = await _tecnicoServices.Deletar(id);
+        if(result is null)
+            return NotFound("Técnico não encontrado.");
+
+        return Ok(result);
     }
 }

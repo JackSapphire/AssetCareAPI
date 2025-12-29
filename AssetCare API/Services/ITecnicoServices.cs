@@ -5,8 +5,8 @@ namespace AssetCare_API.Services;
 public interface ITecnicoServices
 {
     Task<List<GetTecnicoDto>> Listar();
-    Task<GetTecnicoDto> Buscar(int id);
+    Task<List<GetTecnicoDto>> Buscar(string Nome);
     Task<GetTecnicoDto> Cadastrar(AddTecnicoDto tecnico);
-    Task<GetTecnicoDto> Alterar(int id, AddTecnicoDto tecnico);
-    Task<GetTecnicoDto> Deletar(int id);
+    Task<GetTecnicoDto> Alterar(string id, UpdateTecnicoDto tecnico);
+    Task<GetTecnicoDto> Deletar(string id);
 }

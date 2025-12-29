@@ -9,5 +9,7 @@ public class TecnicoProfile : Profile
     public TecnicoProfile()
     {
         CreateMap<AddTecnicoDto, Tecnico>();
+        CreateMap<UpdateTecnicoDto, Tecnico>();
+        CreateMap<Tecnico, GetTecnicoDto>();
     }
 }
