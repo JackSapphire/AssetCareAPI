@@ -5,17 +5,17 @@ namespace AssetCare_API.DTOs;
 public class AddTecnicoDto
 {
     [Required]
-    public string UserName { get; set; }
+    public string UserName { get; set; } = string.Empty;
 
     [Required]
     [DataType(DataType.Password)]
-    public string Password { get; set; }
+    public string Password { get; set; } = string.Empty;
 
     [Required]
     [Compare("Password")]
-    public string RePassword { get; set; }
+    public string RePassword { get; set; } = string.Empty;
 
-    public string Nome { get; set; }
+    public string Nome { get; set; } = string.Empty;
 
     public int RegistroProfissional { get; set; }
 

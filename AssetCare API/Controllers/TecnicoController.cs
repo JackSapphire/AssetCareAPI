@@ -1,8 +1,6 @@
 ﻿using AssetCare_API.DTOs;
-using AssetCare_API.Models;
 using AssetCare_API.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace AssetCare_API.Controllers;
 
@@ -11,7 +9,6 @@ namespace AssetCare_API.Controllers;
 
 public class TecnicoController(ITecnicoServices _tecnicoServices) : ControllerBase
 {
-
     [HttpGet("ListarTecnicos")]
     public async Task<IActionResult> ListarTecnicosAsync()
         => Ok(await _tecnicoServices.Listar());
@@ -27,14 +24,12 @@ public class TecnicoController(ITecnicoServices _tecnicoServices) : ControllerBa
 
     [HttpPost("CadastrarTecnico")]
     public async Task<IActionResult> CadastrarTecnico(AddTecnicoDto dto)
-    {
-        return Ok(await _tecnicoServices.Cadastrar(dto));
-    }
+        => Ok(await _tecnicoServices.Cadastrar(dto));
 
     [HttpPut("AlterarTecnico/{id}")]
-    public async Task<IActionResult> AlterarTecnicoAsync(string id, UpdateTecnicoDto character)
+    public async Task<IActionResult> AlterarTecnicoAsync(string id, UpdateTecnicoDto dto)
     {
-        var result = await _tecnicoServices.Alterar(id, character);
+        var result = await _tecnicoServices.Alterar(id, dto);
         if(result is null)
             return NotFound("Técnico não encontrado.");
         return Ok(result);

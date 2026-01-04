@@ -22,7 +22,45 @@ namespace AssetCare_API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AssetCare_API.Models.Equipmento", b =>
+            modelBuilder.Entity("AssetCare_API.Models.Manutencao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DataAgendada")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataExecucao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MaquinaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TecnicoId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaquinaId");
+
+                    b.HasIndex("TecnicoId");
+
+                    b.ToTable("Manutencoes");
+                });
+
+            modelBuilder.Entity("AssetCare_API.Models.Maquina", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,40 +89,7 @@ namespace AssetCare_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Equipamentos");
-                });
-
-            modelBuilder.Entity("AssetCare_API.Models.Manutencao", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DataAgendada")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DataExecucao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EquipmentoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TecnicoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Manutencoes");
+                    b.ToTable("Maquinas");
                 });
 
             modelBuilder.Entity("AssetCare_API.Models.Tecnico", b =>
@@ -152,6 +157,25 @@ namespace AssetCare_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tecnicos");
+                });
+
+            modelBuilder.Entity("AssetCare_API.Models.Manutencao", b =>
+                {
+                    b.HasOne("AssetCare_API.Models.Maquina", "Maquina")
+                        .WithMany()
+                        .HasForeignKey("MaquinaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AssetCare_API.Models.Tecnico", "Tecnico")
+                        .WithMany()
+                        .HasForeignKey("TecnicoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Maquina");
+
+                    b.Navigation("Tecnico");
                 });
 #pragma warning restore 612, 618
         }

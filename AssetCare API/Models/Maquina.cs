@@ -1,6 +1,6 @@
 ﻿namespace AssetCare_API.Models;
 
-public class Equipmento
+public class Maquina
 {
     public int Id { get; set; }
     public string Nome { get; set; } = string.Empty;

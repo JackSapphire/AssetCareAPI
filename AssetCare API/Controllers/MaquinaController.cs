@@ -1,44 +1,56 @@
-﻿using AssetCare_API.Services;
+﻿using AssetCare_API.DTOs;
+using AssetCare_API.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssetCare_API.Controllers;
 
 [Route("[Controller]")]
 [ApiController]
-public class MaquinaController : ControllerBase
+public class MaquinaController(IMaquinaService _maquinaServices) : ControllerBase
 {
     [HttpGet("ListarEquipamentos")]
-    public IActionResult ListarEquipamentos()
+    public async Task<IActionResult> ListarEquipamentosAsync()
+        => Ok(await _maquinaServices.Listar());
+
+    [HttpGet("BuscarEquipamentoId/{id}")]
+    public async Task<IActionResult> BuscarEquipamentoId(int id)
     {
-        // Lógica para listar equipamentos
-        throw new NotImplementedException();
+        var Maquina = await _maquinaServices.BuscarID(id);
+        if (Maquina == null)
+            return NotFound("Máquina não encontrada.");
+        return Ok(Maquina);
     }
 
-    [HttpGet("BuscarEquipamento/{id}")]
-    public IActionResult BuscarEquipamento(int id)
+    [HttpGet("BuscarEquipamentoNome/{Nome}")]
+    public async Task<IActionResult> BuscarEquipamentoNomeAsync(string Nome)
     {
-        // Lógica para buscar um equipamento por ID
-        throw new NotImplementedException();
+        var Maquina = await _maquinaServices.BuscarNome(Nome);
+        if (Maquina == null || !Maquina.Any())
+            return NotFound("Máquina não encontrada.");
+        return Ok(Maquina);
     }
 
     [HttpPost("CadastrarEquipamento")]
-    public IActionResult CadastrarEquipamento()
-    {
-        // Lógica para cadastrar um novo equipamento
-        throw new NotImplementedException();
-    }
+    public async Task<IActionResult> CadastrarEquipamento(AddMaquinaDto dto)
+        => Ok(await _maquinaServices.Cadastrar(dto));
 
     [HttpPut("AlterarEquipamento/{id}")]
-    public IActionResult AlterarEquipamento(int id)
+    public async Task<IActionResult> AlterarEquipamento(int id, UpdateMaquinaDto dto)
     {
-        // Lógica para alterar um equipamento existente
-        throw new NotImplementedException();
+        var result = await _maquinaServices.Alterar(id, dto);
+        if (result is null)
+            return NotFound("Máquina não encontrada.");
+        return Ok(result);
     }
 
     [HttpDelete("DeletarEquipamento/{id}")]
-    public IActionResult DeletarEquipamento(int id)
+    public async Task<IActionResult> DeletarEquipamento(int id)
     {
-        // Lógica para deletar um equipamento
-        throw new NotImplementedException();
+        var result = await _maquinaServices.Deletar(id);
+        if (result is null)
+            return NotFound("Máquina não encontrada.");
+
+        return Ok(result);
     }
 }

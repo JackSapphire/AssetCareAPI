@@ -6,28 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AssetCare_API.Migrations
 {
     /// <inheritdoc />
-    public partial class Inicial : Migration
+    public partial class Base : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Equipamentos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fabricante = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Equipamentos", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Manutencoes",
                 columns: table => new
@@ -44,6 +27,23 @@ namespace AssetCare_API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Manutencoes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Maquinas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Fabricante = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Maquinas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,10 +80,10 @@ namespace AssetCare_API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Equipamentos");
+                name: "Manutencoes");
 
             migrationBuilder.DropTable(
-                name: "Manutencoes");
+                name: "Maquinas");
 
             migrationBuilder.DropTable(
                 name: "Tecnicos");

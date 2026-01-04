@@ -28,6 +28,8 @@ builder.Services
 // Registrar serviços de aplicação
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<ITecnicoServices, TecnicoServices>();
+builder.Services.AddScoped<IMaquinaService, MaquinaServices>();
+builder.Services.AddScoped<IManutencaoService, ManutencaoServices>();
 
 builder.Services.AddAutoMapper
     (AppDomain.CurrentDomain.GetAssemblies());
