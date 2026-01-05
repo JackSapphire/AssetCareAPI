@@ -44,4 +44,8 @@ public class TecnicoController(ITecnicoServices _tecnicoServices) : ControllerBa
 
         return Ok(result);
     }
+
+    [HttpPost("Login")]
+    public async Task<IActionResult> LogIn(LoginTecnicoDto tecnico)
+        => Ok(await _tecnicoServices.LogIn(tecnico));
 }

@@ -18,26 +18,32 @@ public class TokenService
     {
         Claim[] claims = new Claim[]
         {
-            new Claim("Username", usuario.UserName),
-            new Claim("Id", usuario.Id),
-            new Claim("Nome", usuario.Nome),
-            new Claim("RegistroProfissional", usuario.RegistroProfissional.ToString()),
-            new Claim("Area", usuario.Area),
-            new Claim("Formacao", usuario.Formacao),
-            new Claim("LoginTimeStamp", DateTime.UtcNow.ToString())
+        new Claim(ClaimTypes.Name, usuario.UserName),
+        new Claim(ClaimTypes.NameIdentifier, usuario.Id),
+        new Claim("Nome", usuario.Nome),
+        new Claim("RegistroProfissional", usuario.RegistroProfissional.ToString()),
+        new Claim("Area", usuario.Area),
+        new Claim("Formacao", usuario.Formacao),
+        new Claim("LoginTimeStamp", DateTime.UtcNow.ToString())
         };
 
-        var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SymmetricSecurityKey"]));  //Chave totalmente aleatória
+        var key = _configuration["Jwt:Key"];
 
-        var SignInCredentials = new SigningCredentials(chave, SecurityAlgorithms.HmacSha256);
+        if (string.IsNullOrEmpty(key))
+            throw new Exception("JWT Key não configurada");
 
-        var Token = new JwtSecurityToken
-            (
-            expires: DateTime.Now.AddMinutes(10),
+        var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+        var credenciais = new SigningCredentials(chave, SecurityAlgorithms.HmacSha256);
+
+        var token = new JwtSecurityToken(
+            issuer: _configuration["Jwt:Issuer"],
+            audience: _configuration["Jwt:Audience"],
             claims: claims,
-            signingCredentials: SignInCredentials
-            );
+            expires: DateTime.UtcNow.AddMinutes(10),
+            signingCredentials: credenciais
+        );
 
-        return new JwtSecurityTokenHandler().WriteToken(Token);
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
+
 }

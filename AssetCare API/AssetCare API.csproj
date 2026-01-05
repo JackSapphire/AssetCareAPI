@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>AssetCare_API</RootNamespace>
+    <UserSecretsId>b94177c9-ef30-4e8a-a800-e1b0e1557ff1</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

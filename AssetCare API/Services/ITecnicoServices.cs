@@ -9,4 +9,5 @@ public interface ITecnicoServices
     Task<GetTecnicoDto> Cadastrar(AddTecnicoDto tecnico);
     Task<GetTecnicoDto> Alterar(string id, UpdateTecnicoDto tecnico);
     Task<GetTecnicoDto> Deletar(string id);
+    Task<string> LogIn (LoginTecnicoDto tecnico);
 }

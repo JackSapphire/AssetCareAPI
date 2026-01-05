@@ -70,4 +70,19 @@ public class TecnicoServices : ITecnicoServices
 
         return _mapper.Map<GetTecnicoDto>(tecnico);
     }
+
+    public async Task<string> LogIn(LoginTecnicoDto tecnico)
+    {
+        var Result = await _signInManager.PasswordSignInAsync(tecnico.Username, tecnico.Password, false, false);
+
+        if (!Result.Succeeded)
+            throw new ApplicationException("Usuário Não Autenticado");
+
+        var usuario = _signInManager
+            .UserManager
+            .Users
+            .FirstOrDefault(user => user.NormalizedUserName == tecnico.Username.ToUpper());
+
+        return _tokenService.GerarToken(usuario);
+    }
 }
